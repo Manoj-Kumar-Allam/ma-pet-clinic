@@ -1,0 +1,219 @@
+***********************************************SOLID Principles*******************************************************************
+**********************************************************************************************************************************
+Solid Principles -: (March 1995) -> Robert "AKA Uncle Bod" Martin Michel Feather given as acronym as SOLID Principles
+The Five Principles focus on dependency management.
+
+Poor Dependency management leads to code that brittle, fragile and hard to change. whreas poper dependency management leads to quality code and easy to maintain.
+
+Coined by Robert C. Martin (Uncle Bob), SOLID design principles are a combination of five other principles — Single Responsibility Principle, Open-Closed Principle, Liskov Substitution Principle, Interface Segregation Principle, and Dependency Inversion Principle
+SOLID principles are class-level, object-oriented design concepts that, in conjunction with an extensive test suite, help you avoid and combat code rot.
+
+Code Rot -: When an application becomes a festering mass of code that the developers find increasingly hard to maintain.
+festering -> becoming worse or more intense, especially through long-term neglect or indifference.
+Dur to this the below problems would occur-:
+1.Rigidity – small changes causes the entire system to rebuild.
+2.Fragility – changes to one module causes other unrelated modules to misbehave. Imagine a car system in which changing the radio station affects windows.
+3.Immobility – a module’s internal components cannot be extracted and reused in new environments. For example, if an application’s login module cannot be used in entirely different system then this module is immobile, caused by couplings and dependencies between different modules. The strategy is to decouple central abstractions from low-level details, like a particular database schema or UI implementation (web, desktop) or specific frameworks.
+4.Viscosity – when building and testing are difficult to perform and take a long time to execute. When even a simple change is costly to make, and requires you to make changes in multiple places/levels.
+
+Your software must be able to keep up with the changing needs of your customer in order to keep the survive and profitable.
+
+Inorder to avoid the above problems we should use solid design principles
+
+**************************************************SOLID Principles*************************************************************
+*******************************************************************************************************************************
+
+1. Single Responsibility Principle (SRP) -> it states that there should never be more than one reason for a class to change.
+This means that every class, or similar structure, in your code should have only one job to do.
+
+1.1 Everything in the class should be related to that single purpose, i.e. be cohesive. It does not mean that your classes should only contain one method or property.
+
+For Example -:
+
+class Employee {
+  public Pay calculatePay() {...}
+  public void save() {...}
+  public String describeEmployee() {...}
+}
+
+The correct answer is three. ;-)
+
+Here we have 1) calculation logic with 2) database logic and 3) reporting logic all mixed up within one class. If you have multiple responsibilities combined into one class, it might be difficult to change one part without breaking others. Mixing responsibilities also makes the class harder to understand and harder to test, decreasing cohesion. The easiest way to fix this is to split the class into three different classes, with each having only one responsibility: database access, calculating pay and reporting, all separated.
+
+2. Open-Closed Principle (OCP)
+
+you don't need to rewrite your mobo to plug in Mr Happy
+
+The Open-Closed Principle (OCP) states that classes should be open for extension but closed for modification. “Open to extension” means that you should design your classes so that new functionality can be added as new requirements are generated. “Closed for modification” means that once you have developed a class you should never modify it, except to correct bugs.
+
+These two parts of the principle appear to be contradictory. However, if you correctly structure your classes and their dependencies, you can add functionality without editing existing source code.
+
+Generally you achieve this by referring to abstractions for dependencies, such as interfaces or abstract classes, rather than using concrete classes. Functionality can be added by creating new classes that implement the interfaces.
+
+Applying OCP to your projects limits the need to change source code once it has been written, tested and debugged. This reduces the risk of introducing new bugs to existing code, leading to more robust software.
+
+Open-Closed Principle Example
+Another side effect of the use of interfaces for dependencies is reduced coupling and increased flexibility.
+
+
+void checkOut(Receipt receipt) {
+  Money total = Money.zero;
+  for (item : items) {
+    total += item.getPrice();
+    receipt.addItem(item);
+  }
+  Payment p = acceptCash(total);
+  receipt.addPayment(p);
+}
+
+So how do we add credit card support? You *could* add an “if” statement like this, but then that would be violation of OCP.
+
+
+Payment p;
+if (credit)
+  p = acceptCredit(total);
+else
+  p = acceptCash(total);
+receipt.addPayment(p);
+
+Here is a better solution:
+
+
+public interface PaymentMethod {void acceptPayment(Money total);}
+
+void checkOut(Receipt receipt, PaymentMethod pm) {
+  Money total = Money.zero;
+  for (item : items) {
+    total += item.getPrice();
+    receipt.addItem(item);
+  }
+  Payment p = pm.acceptPayment(total);
+  receipt.addPayment(p);
+}
+
+And here’s a dirty little secret: OCP helps only if the changes that are going to come are predictable, so you should apply it only if a similar change has already happened. So, first do the simplest thing and then see what changes are requested so you can more accurately predict the future changes.
+
+This means waiting for a customer to make a change and then invent the abstractions that will protect yourself from a similar change in the future.
+
+3. Liskov Substitution Principle (LSP)
+Image of Liskov Substitution Principle: If it looks like a duck, quacks like a duck, but needs batteries you probabaly have the wrong distraction
+
+The Liskov Substitution Principle (LSP) applies to inheritance hierarchies, specifying that you should design your classes so that client dependencies can be substituted with subclasses without the client knowing about the change.
+
+All subclasses must, therefore, operate in the same manner as their base classes. The specific functionality of the subclass may be different but must conform to the expected behaviour of the base class. To be a true behavioural subtype, the subclass must not only implement the base class’s methods and properties, but also conform to its implied behaviour.
+
+In general, if a subtype of the supertype does something that the client of the supertype does not expect, then this is in violation of LSP. Imagine a derived class throwing an exception that the superclass does not throw, or if a derived class has some unexpected side effects. Basically, derived classes should never do less than their base class.
+
+A typical example that violates LSP is a Square class that derives from a Rectangle class. The Square class always assumes that the width is equal with the height. If a Square object is used in a context where a Rectangle is expected, unexpected behaviour may occur because the dimensions of a Square cannot (or rather should not) be modified independently.
+
+Liskov Substitution Principle Example
+This problem cannot be easily fixed: if we can modify the setter methods in the Square class so that they preserve the Square invariant (i.e., keep the dimensions equal), then these methods will weaken (violate) the post-conditions for the Rectangle setters, which state that dimensions can be modified independently.
+
+
+public class Rectangle {
+  private double height;
+  private double width;
+
+  public double area();
+
+  public void setHeight(double height);
+  public void setWidth(double width);
+}
+
+What you see above violates LSP.
+
+
+public class Square extends Rectangle {  
+  public void setHeight(double height) {
+    super.setHeight(height);
+    super.setWidth(height);
+  }
+
+  public void setWidth(double width) {
+    setHeight(width);
+  }
+}
+
+Violations of LSP cause undefined behaviour. Undefined behaviour means that it works okay during development but blows up in production, or that you spend weeks debugging something that only occurs once per day, or that you have to go through hundreds of megabytes of logs to figure out what went wrong.
+
+4. Interface Segregation Principle (ISP)
+Image of Interface Segregation Principle: if I require food, I want to eat(food food) not (lightcandelabra() or LayoutCutlery(CutleryLayout preferredLayout)
+
+The Interface Segregation Principle (ISP) states that clients should not be forced to depend upon interface members they do not use. When we have non-cohesive interfaces, the ISP guides us to create multiple, smaller, cohesive interfaces.
+
+When you apply ISP, classes and their dependencies communicate using tightly-focused interfaces, minimizing dependencies on unused members and reducing coupling accordingly. Smaller interfaces are easier to implement, improving flexibility and the possibility of reuse. As fewer classes share these interfaces, the number of changes that are required in response to an interface modification is lowered, which increases robustness.
+
+Basically, the lesson here is “Don’t depend on things you don’t need”. Here is an example:
+
+Picture an ATM machine (aka Bankomat), which has a screen where we wish to display different messages. How would you solve the problem of displaying different messages? We apply SRP, OCP and LSP and come up with a solution–but still, this system would be hard to maintain. Why is that?
+
+Imagine the ATM’s owner wants to add a message that appears only for withdrawal functionality, they want to display the message that says “This ATM will charge you some fee for withdrawals, do you agree?” How would you solve it?
+
+Perhaps you would add a method to the Messenger interface and be done with it. But this causes you to recompile all the users of this interface and almost all the system needs to be redeployed, which is in direct violation of OCP. Let the code rot begin!
+
+What happened here was that changing the withdrawal functionality caused changes to other totally unrelated functionalities as well, which is something, as we now know, we don’t want. How did this happen?
+
+Interface Segregation Principle Example
+Actually, here is backwards dependency at play, where each functionality that uses this Messengers interface depends on methods it does not need but are needed by other functionalities. Here is what we want to avoid:
+
+
+public interface Messenger {
+  askForCard();
+  tellInvalidCard();
+  askForPin();
+  tellInvalidPin();
+  tellCardWasSiezed();
+  askForAccount();
+  tellNotEnoughMoneyInAccount();
+  tellAmountDeposited();
+  tellBalance();
+}
+
+Instead, split the Messenger interface up so that different ATM functionality depend on separate Messengers.
+
+
+public interface LoginMessenger {
+  askForCard();
+  tellInvalidCard();
+  askForPin();
+  tellInvalidPin();	
+}
+
+public interface WithdrawalMessenger {
+  tellNotEnoughMoneyInAccount();
+  askForFeeConfirmation();
+}
+
+publc class EnglishMessenger implements LoginMessenger, WithdrawalMessenger {
+  ...	
+}
+ 
+
+5. Dependency Inversion Principle (DIP)
+Image of Dependency Inversion Principle: would you solder a lamp directly to electrical wiring in wall?
+
+The Dependency Inversion Principle (DIP) states that high-level modules should not depend upon low-level modules; they should depend on abstractions. Secondly, abstractions should not depend upon details; details should depend upon abstractions. The idea is that we isolate our class behind a boundary formed by the abstractions it depends on. If all the details behind those abstractions change, then our class is still safe. This helps keep coupling low and makes our design easier to change. DIP also allows us to test things in isolation, details like database are plugins to our system.
+
+Dependency Inversion Principle Example
+Here is an example: A program depends on Reader and Writer interfaces that are abstractions, and Keyboard and Printer are details that depend on those abstractions by implementing those interfaces. Here CharCopier is oblivious to the low-level details of Reader and Writer implementations and thus you can pass in any Device that implements the Reader and Writer interface and CharCopier would still work correctly.
+
+
+public interface Reader { char getchar(); }
+public interface Writer { void putchar(char c)}
+
+class CharCopier {
+
+  void copy(Reader reader, Writer writer) {
+    int c;
+    while ((c = reader.getchar()) != EOF) {
+      writer.putchar();
+    }
+  }
+}
+
+public Keyboard implements Reader {...}
+public Printer implements Writer {…}
+ 
+
+Final Thoughts
+I guess my main point here is that SOLID principles are valuable tools in your toolbox, and that you should keep them in back of your mind when designing your next feature or application.

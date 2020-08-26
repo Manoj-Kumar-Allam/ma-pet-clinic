@@ -1,0 +1,14 @@
+*****************************************************Dependency Injection*********************************************************
+**********************************************************************************************************************************Dependency Injection and Inversion of Control -:
+
+
+
+We've got another resource about object-oriented design vs. functional programming, which you can read here. 
+
+See you soon, when I hope to talk about coupling and cohesion, but in the meantime, please leave comments, share with your friends and reach out to me @Jrebel_Java.
+
+Want to See How Developers Work With Java in 2020?
+Our latest Java developer productivity report shows the technologies and ideas that developers use in developing Java applications in 2020. You can grab a PDF version of the report at the link below.
+
+GET THE REPORT
+
