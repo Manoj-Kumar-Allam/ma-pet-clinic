@@ -1,0 +1,1 @@
+By Default Spring Boot is going to package a fat executable Jar. So it will include in all the dependencies.
