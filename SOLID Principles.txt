@@ -1,4 +1,4 @@
-***********************************************SOLID Principles*******************************************************************
+﻿***********************************************SOLID Principles*******************************************************************
 **********************************************************************************************************************************
 Solid Principles -: (March 1995) -> Robert "AKA Uncle Bod" Martin Michel Feather given as acronym as SOLID Principles
 The Five Principles focus on dependency management.
@@ -27,6 +27,8 @@ Inorder to avoid the above problems we should use solid design principles
 This means that every class, or similar structure, in your code should have only one job to do.
 
 1.1 Everything in the class should be related to that single purpose, i.e. be cohesive. It does not mean that your classes should only contain one method or property.
+
+The single responsibility principle is founded on one of the basic, general ideas of object-oriented programming – the so-called divide and conquer principle – solving a problem by solving its multiple sub-problems.
 
 For Example -:
 
@@ -217,3 +219,7 @@ public Printer implements Writer {…}
 
 Final Thoughts
 I guess my main point here is that SOLID principles are valuable tools in your toolbox, and that you should keep them in back of your mind when designing your next feature or application.
+
+
+
+Dependency Inversion Principle talks about de-coupling and structure of the code where as Dependency Injection talks about the code functionally works. When programming with the Spring Framework, Spring is using Dependency Injection to assemble your application. Dependency Inversion is what decouples your code so Spring can use Dependency Injection at run time.
