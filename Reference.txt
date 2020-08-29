@@ -1,1 +1,26 @@
 By Default Spring Boot is going to package a fat executable Jar. So it will include in all the dependencies.
+<properties>
+		<spring-boot.repackage.skip>true</spring-boot.repackage.skip>
+</properties>
+
+<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+</build>
+
+The above build tag and properties tag will help to build lean jar instead of fat jar.
+
+Maven Release Pulgin -:
+
+This plug in is used to release a project with maven. we can release project in 2 steps prepare, perform
