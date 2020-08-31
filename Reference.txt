@@ -19,8 +19,32 @@ By Default Spring Boot is going to package a fat executable Jar. So it will incl
 		</plugins>
 </build>
 
-The above build tag and properties tag will help to build lean jar instead of fat jar.
+The above build tag and properties tag will help to build lean jar instead of fat jar containing only the class files.
 
 Maven Release Pulgin -:
 
 This plug in is used to release a project with maven. we can release project in 2 steps prepare, perform
+
+mvn relese:prepare
+mvn relese:perform
+
+<plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-release-plugin</artifactId>
+	<configuration>
+		<goals>install</goals>
+		<autoVersionSubmodules>true</autoVersionSubmodules>
+	</configuration
+</plugin>
+
+We can customize the Spring text in the console by adding banner.txt under src/resources. we need to put our own Ascii Art
+we can configure image too by using spring.banner.image.location= property in application.prop file and putting that image in resources
+
+@RequestMapping({"", "/", "index", "index.html"}), it defines as whenever there is root context, root context + / or index or index.html that particular method will triggered.
+
+th:text="Index Page" By Default spring will evaluate the expression inside the "", So when you are passing direct value use '' inside "".
+
+
+
+
+
