@@ -10,8 +10,8 @@ public interface CrudService<T, ID> {
 	
 	T save(T object);
 	
-	T delete(T object);
+	Boolean delete(T object);
 	
-	ID deleteById(ID id);
+	T deleteById(ID id);
 	
 }
