@@ -26,7 +26,6 @@ public class DataLoader implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		
 			Owner owner = new Owner();
-			owner.setId(1l);
 			owner.setFirstName("Manoj");
 			owner.setLastName("Kumar");
 			
@@ -35,7 +34,6 @@ public class DataLoader implements CommandLineRunner {
 			System.out.println("Loaded Owners..");
 			
 			Vet vet = new Vet();
-			vet.setId(1l);
 			vet.setFirstName("Sam");
 			vet.setLastName("Axe");
 			
