@@ -7,8 +7,6 @@ import com.ma.petclinicdata.model.Owner;
 import com.ma.petclinicdata.model.Vet;
 import com.ma.petclinicdata.services.OwnerService;
 import com.ma.petclinicdata.services.VetService;
-import com.ma.petclinicdata.services.map.OwnerServiceMap;
-import com.ma.petclinicdata.services.map.VetServiceMap;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -17,11 +15,10 @@ public class DataLoader implements CommandLineRunner {
 	
 	private final VetService vetService;
 
-	
-	public DataLoader() {
+	public DataLoader(OwnerService ownerService, VetService vetService) {
 		super();
-		this.ownerService = new OwnerServiceMap();
-		this.vetService = new VetServiceMap();
+		this.ownerService = ownerService;
+		this.vetService = vetService;
 	}
 
 

@@ -17,7 +17,8 @@ public abstract class AbstractMapService<T, ID> {
 		return dataMap.get(id);
 	}
 	
-	T save(ID id, T object) {		
+	T save(ID id, T object) {
+		dataMap.put(id, object);
 		return object;
 	}
 	
