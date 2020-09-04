@@ -9,7 +9,7 @@ public class Pet extends BaseEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	
+	private String name;
 	private PetType petType;
 	private Owner owner;
 	private LocalTime birthDate;
@@ -19,12 +19,13 @@ public class Pet extends BaseEntity {
 		super();
 	}
 
+	public String getName() {
+		return name;
+	}
 
-	public Pet(PetType petType, Owner owner, LocalTime birthDate) {
-		super();
-		this.petType = petType;
-		this.owner = owner;
-		this.birthDate = birthDate;
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 

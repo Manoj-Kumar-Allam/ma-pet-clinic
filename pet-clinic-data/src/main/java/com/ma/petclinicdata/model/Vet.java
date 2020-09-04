@@ -1,5 +1,6 @@
 package com.ma.petclinicdata.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Vet extends Person {
@@ -9,7 +10,7 @@ public class Vet extends Person {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	Set<Specialty> specialties;
+	Set<Specialty> specialties = new HashSet<>();
 
 	public Set<Specialty> getSpecialties() {
 		return specialties;
