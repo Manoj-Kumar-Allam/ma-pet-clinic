@@ -1,6 +1,11 @@
 package com.ma.petclinicdata.model;
 
-public class Specialty {
+public class Specialty extends BaseEntity {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private String description;
 
