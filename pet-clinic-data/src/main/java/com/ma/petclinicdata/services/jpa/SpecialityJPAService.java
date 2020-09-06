@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.ma.petclinicdata.model.Speciality;
-import com.ma.petclinicdata.model.repository.SpecialityRepository;
+import com.ma.petclinicdata.repository.SpecialityRepository;
 import com.ma.petclinicdata.services.SpecialtyService;
 
 @Service

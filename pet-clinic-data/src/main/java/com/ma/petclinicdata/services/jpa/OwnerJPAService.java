@@ -4,11 +4,12 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.ma.petclinicdata.model.Owner;
-import com.ma.petclinicdata.model.repository.OwnerRepository;
+import com.ma.petclinicdata.repository.OwnerRepository;
 import com.ma.petclinicdata.services.OwnerService;
 
 @Service
@@ -17,6 +18,7 @@ public class OwnerJPAService implements OwnerService {
 	
 	private final OwnerRepository ownerRepository;
 	
+	@Autowired
 	public OwnerJPAService(OwnerRepository ownerRepository) {
 		this.ownerRepository = ownerRepository;
 	}
