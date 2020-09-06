@@ -2,6 +2,13 @@ package com.ma.petclinicdata.model;
 
 import java.time.LocalTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="pets")
 public class Pet extends BaseEntity {
 	
 	/**
@@ -9,9 +16,16 @@ public class Pet extends BaseEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	@Column(name="name")
 	private String name;
+	
+	@ManyToOne
 	private PetType petType;
+	
+	@ManyToOne
 	private Owner owner;
+	
+	@Column(name="birth_date")
 	private LocalTime birthDate;
 	
 	
