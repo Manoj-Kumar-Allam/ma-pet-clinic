@@ -1,5 +1,6 @@
 package com.ma.petclinicweb.bootstrap;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 import org.springframework.boot.CommandLineRunner;
@@ -10,10 +11,12 @@ import com.ma.petclinicdata.model.Pet;
 import com.ma.petclinicdata.model.PetType;
 import com.ma.petclinicdata.model.Speciality;
 import com.ma.petclinicdata.model.Vet;
+import com.ma.petclinicdata.model.Visit;
 import com.ma.petclinicdata.services.OwnerService;
 import com.ma.petclinicdata.services.PetTypeService;
 import com.ma.petclinicdata.services.SpecialtyService;
 import com.ma.petclinicdata.services.VetService;
+import com.ma.petclinicdata.services.VisitService;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -25,13 +28,17 @@ public class DataLoader implements CommandLineRunner {
 	private final PetTypeService petTypeService;
 	
 	private final SpecialtyService specialtyService;
+	
+	private final VisitService visitService;
 
-	public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialtyService specialtyService) {
+	public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService,
+			SpecialtyService specialtyService, VisitService visitService) {
 		super();
 		this.ownerService = ownerService;
 		this.vetService = vetService;
 		this.petTypeService = petTypeService;
 		this.specialtyService = specialtyService;
+		this.visitService = visitService;
 	}
 
 	@Override
@@ -60,8 +67,6 @@ public class DataLoader implements CommandLineRunner {
 		owner.setAddress("123 Paris Corner");
 		owner.setCity("Chennai");
 		owner.setTelephone("3284723442");
-
-		this.ownerService.save(owner);
 		
 		Pet pet = new Pet();
 		pet.setPetType(savedDog);
@@ -77,6 +82,15 @@ public class DataLoader implements CommandLineRunner {
 		
 		owner.getPets().add(pet);
 		owner.getPets().add(pet2);
+		
+		this.ownerService.save(owner);
+		
+		Visit visit = new Visit();
+		visit.setPet(pet2);
+		visit.setDate(LocalDate.now());
+		visit.setDescription("Cat visit");
+		
+		visitService.save(visit);
 		
 		System.out.println("Loaded Owners..");
 
