@@ -34,12 +34,12 @@ public abstract class AbstractMapService<T extends BaseEntity, ID extends Number
 		return object;
 	}
 
-	T deletById(ID id) {
-		return dataMap.remove(id);
+	void deletById(ID id) {
+		dataMap.remove(id);
 	}
 
-	Boolean delete(T object) {
-		return dataMap.entrySet().removeIf(entry -> entry.getValue().equals(object));
+	void delete(T object) {
+		dataMap.entrySet().removeIf(entry -> entry.getValue().equals(object));
 	}
 
 	private Long generateId() {
