@@ -18,7 +18,6 @@ import lombok.ToString;
 @Setter
 @Getter
 @NoArgsConstructor
-@Builder
 @ToString
 @Entity
 @Table(name="owners")
@@ -38,7 +37,6 @@ public class Owner extends Person {
 	@Column(name="telephone")
 	private String telephone;
 	
-	@Builder.Default
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="owner")
 	private Set<Pet> pets = new HashSet<>();
 
