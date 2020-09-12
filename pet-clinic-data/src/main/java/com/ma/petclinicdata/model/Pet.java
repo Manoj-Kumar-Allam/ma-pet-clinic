@@ -22,12 +22,11 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @ToString
 @Entity
 @Table(name="pets")
 public class Pet extends BaseEntity {
-	
+
 	/**
 	 * 
 	 */
@@ -45,8 +44,19 @@ public class Pet extends BaseEntity {
 	@Column(name="birth_date")
 	private LocalTime birthDate;
 	
-	@Builder.Default
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="pet")
 	private Set<Visit> visits = new HashSet<>();
+	
+	@Builder
+	public Pet(Long id, String name, PetType petType, Owner owner, LocalTime birthDate, Set<Visit> visits) {
+		super(id);
+		this.name = name;
+		this.petType = petType;
+		this.owner = owner;
+		this.birthDate = birthDate;
+		this.visits = visits;
+	}
+	
+	
 	
 }
