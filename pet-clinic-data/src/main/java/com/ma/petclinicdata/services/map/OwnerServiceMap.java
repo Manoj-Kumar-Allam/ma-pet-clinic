@@ -1,6 +1,8 @@
 package com.ma.petclinicdata.services.map;
 
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -73,6 +75,11 @@ public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements 
 	@Override
 	public Owner findByLastName(String lastName) {
 		return this.findAll().stream().filter(owner -> owner.getLastName().equalsIgnoreCase(lastName)).findFirst().orElse(null);
+	}
+
+	@Override
+	public List<Owner> findAllByLastNameLike(String lastName) {
+		return this.findAll().stream().filter(owner -> owner.getLastName().startsWith(lastName)).collect(Collectors.toList());
 	}
 
 }

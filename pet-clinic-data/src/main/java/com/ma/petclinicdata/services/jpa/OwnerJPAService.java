@@ -1,6 +1,7 @@
 package com.ma.petclinicdata.services.jpa;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -33,7 +34,7 @@ public class OwnerJPAService implements OwnerService {
 	@Override
 	public Owner findById(Long id) {
 		Optional<Owner> optinalOwner = this.ownerRepository.findById(id);
-		//return optinalOwner.isPresent() ? optinalOwner.get() : null;
+		// return optinalOwner.isPresent() ? optinalOwner.get() : null;
 		return optinalOwner.orElse(null);
 	}
 
@@ -57,4 +58,10 @@ public class OwnerJPAService implements OwnerService {
 		return this.ownerRepository.findByLastName(lastName);
 	}
 
+	@Override
+	public List<Owner> findAllByLastNameLike(String lastName) {
+		return this.ownerRepository.findAllByLastNameLike(lastName) ;
+	}
+	
+	
 }

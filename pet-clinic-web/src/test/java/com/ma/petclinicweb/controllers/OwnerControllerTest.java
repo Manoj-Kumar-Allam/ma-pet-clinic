@@ -2,10 +2,11 @@ package com.ma.petclinicweb.controllers;
 
 import static org.mockito.Mockito.verifyZeroInteractions;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -66,13 +67,13 @@ class OwnerControllerTest {
 	 *
 	 * @generatedBy CodePro at 9/8/20 3:31 PM
 	 */
-	@SuppressWarnings("deprecation")
+	/*@SuppressWarnings("deprecation")
 	@Test
 	void testFind_1()
 		throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.get("/owners/find")).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("notimplemented"));
 		verifyZeroInteractions(this.ownerService);
-	}
+	}*/
 
 	/**
 	 * Run the String listOwners(Model) method test.
@@ -81,13 +82,29 @@ class OwnerControllerTest {
 	 *
 	 * @generatedBy CodePro at 9/8/20 3:31 PM
 	 */
-	@Test
+	/*@Test
 	void testListOwners_1()
 		throws Exception {
 		Mockito.when(this.ownerService.findAll()).thenReturn(owners);
 		mockMvc.perform(MockMvcRequestBuilders.get("/owners")).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("owners/index")).andExpect(MockMvcResultMatchers.model().attribute("owners", Matchers.hasSize(2)));
+	}*/
+	
+	@SuppressWarnings("deprecation")
+	@Test
+	void testFind_1() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders.get("/owners/find")).andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.view().name("owners/findOwners")).andExpect(MockMvcResultMatchers.model().attributeExists("owner"));
+		verifyZeroInteractions(this.ownerService);
 	}
-
+	
+	@Test
+	void testProcessFindForm_1_ForOne() throws Exception {
+		Owner build = Owner.builder().id(1l).lastName("Kumar").build();
+		List<Owner> list = new ArrayList<>();
+		list.add(build);
+		Mockito.when(this.ownerService.findAllByLastNameLike(Mockito.anyString())).thenReturn(list);
+		mockMvc.perform(MockMvcRequestBuilders.get("/owners")).andExpect(MockMvcResultMatchers.status().is3xxRedirection()).andExpect(MockMvcResultMatchers.view().name("redirect:/owners/1"));
+	}
 	
 	/**
 	 * Perform post-test clean-up.
