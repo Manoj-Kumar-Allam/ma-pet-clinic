@@ -1,5 +1,7 @@
 package com.ma.petclinicweb.controllers;
 
+import java.beans.PropertyEditorSupport;
+import java.time.LocalDate;
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -34,6 +36,18 @@ public class PetController {
 	private final PetService petService;
 	
 	private final OwnerService ownerService;
+	
+	@InitBinder
+	public void setAllowedFields(WebDataBinder dataBinder) {
+		dataBinder.setDisallowedFields("id");
+		
+		dataBinder.registerCustomEditor(LocalDate.class, new PropertyEditorSupport() {
+			@Override
+			public void setAsText(String text) {
+				setValue(LocalDate.parse(text));
+			}
+		});
+	}
 
 	public PetController(PetTypeService petTypeService, PetService petService, OwnerService ownerService) {
 		super();
